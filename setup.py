@@ -5,7 +5,8 @@ def readme():
 		return f.read()
 install_requires = [
 	"requests",
-	"beautifulsoup4"
+	"beautifulsoup4",
+	"rich"
 ]
 
 setup(name="bsnlscripts",

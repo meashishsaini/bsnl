@@ -4,6 +4,7 @@ Some scripts to help me in managing daily BSNL broadband things like declining F
 ## Requirements
 * _requests_
 * _beautifulsoup4_
+* _rich_
 
 ## Installation
 1. Clone the repository.

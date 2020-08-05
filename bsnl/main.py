@@ -1,7 +1,6 @@
 from bsnl import usage, helpers, display, data, router
 import requests
 import argparse
-import json
 import signal
 import time
 import sys
@@ -55,7 +54,7 @@ def switch(args):
 						status = router_instance.details()
 						if status.success:
 							if not args.json:
-								display.display_dict(status.data.__dict__, choice)
+								display.router_details(status.data)
 					statuses[choice] = status
 				else:
 					status = data.Status()
@@ -71,13 +70,13 @@ def switch(args):
 		status = helpers.decline_fup(session)
 		statuses["decline"] = status
 		if status.success and not args.json:
-			display.display_dict(status.data, "decline")
+			display.a_dict(status.data, "decline")
 	if args.activate:
 		for choice in args.activate:
 			status = helpers.activate_plan(session, choice)
 			statuses[choice] = status
 			if status.success and not args.json:
-				display.display_dict(status.data, choice)
+				display.a_dict(status.data, choice)
 	if args.restart:
 		if args.router:
 			cls = getattr(router, args.router)
@@ -86,14 +85,14 @@ def switch(args):
 			if status.success:
 				status = router_instance.restart()
 				if status.success and not args.json:
-					display.display_dict(status.__dict__, "restart")
+					display.a_status(status, "restart")
 			statuses["restart"] = status
 		else:
 			status = data.Status()
 			status.message = "Please add router model."
 			statuses[choice] = status
 	if args.json:
-		print(json.dumps(statuses, cls=data.ClassToDictEncoder))
+		display.as_json(statuses)
 	else:
 		display.errors(statuses)
 
